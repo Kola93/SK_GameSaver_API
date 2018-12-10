@@ -7,6 +7,6 @@ public:
 	Serializer();
 	~Serializer();
 
-	bool Serialize(int value) override;
+	bool Serialize(const int& value) override;
 };
 

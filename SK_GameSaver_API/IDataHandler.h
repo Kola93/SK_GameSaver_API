@@ -5,6 +5,6 @@ public:
 	IDataHandler();
 	virtual ~IDataHandler();
 
-	virtual bool Serialize(int value) = 0;
+	virtual bool Serialize(const int& value) = 0;
 };
 

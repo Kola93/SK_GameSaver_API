@@ -11,8 +11,7 @@ Serializer::~Serializer()
 {
 }
 
-bool Serializer::Serialize(int value)
+bool Serializer::Serialize(const int& value)
 {
-
-	return false;
+	return true;
 }
