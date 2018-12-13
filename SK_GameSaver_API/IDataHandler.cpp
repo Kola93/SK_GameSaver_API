@@ -4,6 +4,7 @@
 
 IDataHandler::IDataHandler()
 {
+	m_byteStream = nullptr;
 }
 
 

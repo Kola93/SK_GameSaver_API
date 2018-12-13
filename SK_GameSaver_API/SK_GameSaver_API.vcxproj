@@ -71,7 +71,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CodeAnalysisRuleSet>CppCoreCheckGslRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CodeAnalysisRuleSet>CppCoreCheckGslRules.ruleset</CodeAnalysisRuleSet>
@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CodeAnalysisRuleSet>CppCoreCheckGslRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CodeAnalysisRuleSet>CppCoreCheckGslRules.ruleset</CodeAnalysisRuleSet>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <EnablePREfast>true</EnablePREfast>
+      <EnablePREfast>false</EnablePREfast>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -138,6 +138,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ByteStream.cpp" />
+    <ClCompile Include="Deserializer.cpp" />
     <ClCompile Include="GameSaver.cpp" />
     <ClCompile Include="IDataHandler.cpp" />
     <ClCompile Include="ISerializable.cpp" />
@@ -145,10 +147,13 @@
     <ClCompile Include="Serializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ByteStream.h" />
+    <ClInclude Include="Deserializer.h" />
     <ClInclude Include="GameSaver.h" />
     <ClInclude Include="IDataHandler.h" />
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="Serializer.h" />
+    <ClInclude Include="UserTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
