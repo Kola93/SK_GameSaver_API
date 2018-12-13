@@ -11,9 +11,9 @@ int main()
 	GameSaver GS("");
 	GS.Save(s);
 
-
+	GameSaver ss("");
 	UserTest l;
-	GS.Load(l);
+	ss.Load(l);
 
 	return 0;
 }

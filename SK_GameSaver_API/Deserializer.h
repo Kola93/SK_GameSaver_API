@@ -4,7 +4,7 @@
 class Deserializer : public IDataHandler
 {
 public:
-	Deserializer(ByteStream* p_byteStream);
+	Deserializer(std::shared_ptr<ByteStream> p_byteStream);
 	~Deserializer();
 
 	bool Serialize(const int& value) override { return true; };

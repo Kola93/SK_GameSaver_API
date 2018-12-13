@@ -1,10 +1,11 @@
 #pragma once
 #include "IDataHandler.h"
+#include <memory>
 
 class Serializer : public IDataHandler
 {
 public:
-	Serializer(ByteStream* p_byteStream);
+	Serializer(std::shared_ptr<ByteStream> p_byteStream);
 	~Serializer();
 
 	bool Serialize(const int& value) override;

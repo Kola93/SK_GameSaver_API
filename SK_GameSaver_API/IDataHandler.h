@@ -1,5 +1,6 @@
 #pragma once
 #include "ByteStream.h"
+#include <memory>
 
 class IDataHandler
 {
@@ -10,6 +11,6 @@ public:
 	virtual bool Serialize(const int& value) = 0;
 	virtual bool Deserialize(int& value) = 0;
 protected:
-	ByteStream* m_byteStream;
+	std::shared_ptr<ByteStream> m_byteStream;
 };
 

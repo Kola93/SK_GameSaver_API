@@ -2,7 +2,7 @@
 
 
 
-Serializer::Serializer( ByteStream* p_byteStream)
+Serializer::Serializer(std::shared_ptr<ByteStream> p_byteStream)
 {
 	m_byteStream = p_byteStream;
 }

@@ -6,7 +6,7 @@ struct UserTest : public ISerializable
 {
 	int health;
 	int life;
-	bool Serialize(Serializer* p_serializer) override
+	bool Serialize(std::shared_ptr<Serializer> p_serializer) override
 	{
 		if (!p_serializer->Serialize(health))
 			return false;
@@ -14,12 +14,12 @@ struct UserTest : public ISerializable
 			return false;
 		return true;
 	}
-	bool Deserialize(Deserializer* p_serializer) override
+	bool Deserialize(std::shared_ptr<Deserializer> p_deserializer) override
 	{
 
-		if (!p_serializer->Deserialize(health))
+		if (!p_deserializer->Deserialize(health))
 			return false;
-		if (!p_serializer->Deserialize(life))
+		if (!p_deserializer->Deserialize(life))
 			return false;
 		return true;
 	}
