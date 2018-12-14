@@ -6,6 +6,10 @@
 #include "Deserializer.h"
 #include "UserTest.h"
 
+GameSaver::GameSaver()
+{
+}
+
 GameSaver::GameSaver(std::string p_path)
 {
 	m_path = p_path;
@@ -24,7 +28,7 @@ void GameSaver::Save( ISerializable& p_serializable)
 	
 	p_serializable.Serialize(xSerializer_ptr);
 
-	std::ofstream ofile("foobar.txt", std::ios::out);
+	std::ofstream ofile(m_path, std::ios::out);
 
 	ofile.write(reinterpret_cast<char*>(&xByteStream_ptr->GetBuffer()[0]), xByteStream_ptr->GetSize());
 	ofile.close();
@@ -33,13 +37,13 @@ void GameSaver::Save( ISerializable& p_serializable)
 void GameSaver::Load(ISerializable& p_serializable)
 {	
 
-	std::ifstream ifile("foobar.txt", std::ios::in);
+	std::ifstream ifile(m_path, std::ios::in);
 	ifile.seekg(0, ifile.end);
-	int length = ifile.tellg();
+	int length = static_cast<int>(ifile.tellg());
 	ifile.seekg(0, ifile.beg);
 	//unsigned char* buffer2 = new unsigned char[length];
 
-
+	// TODO CHECK IF LENGHT != -1
 
 	auto xByteStream_ptr = std::make_shared<ByteStream>(length);
 	const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);

@@ -2,11 +2,14 @@
 #include "ISerializable.h"
 
 
-struct UserTest : public ISerializable
+class  UserTest : public ISerializable
 {
-	int health;
-	int life;
-	bool Serialize(std::shared_ptr<Serializer> p_serializer) override
+public:
+	int health = 0;
+	int life = 0;
+	UserTest() {};
+	~UserTest() {};
+	bool ISerializable::Serialize(std::shared_ptr<Serializer> p_serializer) override
 	{
 		if (!p_serializer->Serialize(health))
 			return false;
@@ -14,7 +17,7 @@ struct UserTest : public ISerializable
 			return false;
 		return true;
 	}
-	bool Deserialize(std::shared_ptr<Deserializer> p_deserializer) override
+	bool  ISerializable::Deserialize(std::shared_ptr<Deserializer> p_deserializer) override
 	{
 
 		if (!p_deserializer->Deserialize(health))

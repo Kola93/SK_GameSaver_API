@@ -7,6 +7,3 @@ ISerializable::ISerializable()
 }
 
 
-ISerializable::~ISerializable()
-{
-}

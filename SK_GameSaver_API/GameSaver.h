@@ -4,6 +4,7 @@ class ISerializable;
 class GameSaver
 {
 public:
+	GameSaver();
 	GameSaver(std::string p_path);
 	~GameSaver();
 
