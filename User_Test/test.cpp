@@ -104,10 +104,38 @@ TEST(TheUser, GetErrorWhenCreatingFileWithWrongDirectory) {
 			return true;
 		}
 	};
-	GameSaver GS("/user/wrongDirectory/file.txt");
+	GameSaver GS("/user/wrongdirectory/text.txt");
 	UserStruct2 xUserStruct2Save;
 
-	SaveandLoad_Result result = GS.Save(xUserStruct2Save);
+	SaveandLoad_Result Saveresult = GS.Save(xUserStruct2Save);
 
-	EXPECT_EQ(result, SaveandLoad_Result::FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY);
+	EXPECT_EQ(Saveresult, SaveandLoad_Result::FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY);
+}
+
+TEST(TheUser, GetErrorWhenTryingToDeserializeDataNotAvailable) {
+	struct UserStruct2 : public ISerializable
+	{
+		int int_value = 0;
+		bool Serialize(std::shared_ptr<Serializer> p_serializer) override
+		{
+			if (!p_serializer->Serialize(int_value))
+				return false;
+			return true;
+		}
+		bool Deserialize(std::shared_ptr<Deserializer> p_deserializer) override
+		{
+			if (!p_deserializer->Deserialize(int_value))
+				return false;
+			if (!p_deserializer->Deserialize(int_value))
+				return false;
+			return true;
+		}
+	};
+	GameSaver GS("TestUserStruct2.txt");
+	UserStruct2 xUserStruct2Save;
+
+	SaveandLoad_Result Saveresult = GS.Save(xUserStruct2Save);
+	SaveandLoad_Result Loadresult = GS.Load(xUserStruct2Save);
+
+	EXPECT_EQ(Loadresult, SaveandLoad_Result::FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA);
 }

@@ -39,7 +39,7 @@ bool ByteStream::Write(int p_count, std::string p_value)
 	
 	if (m_length == 0 || m_capacity == m_length)
 	{
-		reserve(m_capacity + p_value.size());
+		Reserve(m_capacity + p_value.size());
 	}
 
 	m_cursor = m_data + m_length;
@@ -62,7 +62,6 @@ bool ByteStream::Write(int p_count, std::string p_value)
 
 bool ByteStream::Read(int p_count, std::string& p_value)
 {
-
 	for (int i = 0; i < p_count; ++i)
 	{		
 		p_value += *reinterpret_cast<char *>(m_cursor);
@@ -71,17 +70,26 @@ bool ByteStream::Read(int p_count, std::string& p_value)
 	return true;
 }
 
-void ByteStream::reserve(const int& newAmount)
+void ByteStream::Reserve(const int& p_NewAmount)
 {
-	char* xNewData = new char[newAmount];
+	char* xNewData = new char[p_NewAmount];
 
 	std::copy(m_data, m_data + m_length, xNewData);
 	delete[] m_data;
 	m_data = nullptr;
 
 	m_data = xNewData;
-	//m_cursor = m_data + m_length;
-	m_capacity = newAmount;	
+	m_capacity = p_NewAmount;
+}
+
+bool ByteStream::IsOutsideEndStreamBoundary()
+{
+	int length = m_cursor - m_data;
+	if(length + 1 > m_length)
+	{
+		return true;
+	}
+	return false;
 }
 
 

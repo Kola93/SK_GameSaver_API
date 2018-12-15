@@ -61,7 +61,7 @@ SaveandLoad_Result GameSaver::Load(ISerializable& p_serializable)
 		const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);
 
 		infile.read(&xByteStream_ptr->GetBuffer()[0], xByteStream_ptr->GetSize());
-		if(p_serializable.Deserialize(xDeserializer_ptr))
+		if(!p_serializable.Deserialize(xDeserializer_ptr))
 		{
 			return FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA;
 		}		
