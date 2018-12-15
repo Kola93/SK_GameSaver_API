@@ -17,27 +17,31 @@ Deserializer::~Deserializer()
 
 bool Deserializer::Deserialize(int& value)
 {
-	if (m_byteStream->Read(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Read(value);
 }
 
 bool Deserializer::Deserialize(float & value)
 {
-	if (m_byteStream->Read(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Read(value);
+}
+
+bool Deserializer::Deserialize(double & value)
+{
+	return m_byteStream->Read(value);
 }
 
 bool Deserializer::Deserialize(bool & value)
 {
-	if (m_byteStream->Read(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Read(value);
 }
+
+bool Deserializer::Deserialize(char & value)
+{
+	return m_byteStream->Read(value);
+}
+
+bool Deserializer::Deserialize(int count, std::string & value)
+{
+	return m_byteStream->Read(count, value);
+}
+

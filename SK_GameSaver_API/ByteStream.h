@@ -1,5 +1,8 @@
 #pragma once
 #include <cassert>
+#include <exception>
+#include <iostream>
+#include <string>
 
 class ByteStream
 {
@@ -9,7 +12,8 @@ public:
 	~ByteStream();
 	char* GetBuffer();
 	int GetSize();
-
+	bool Write(int p_count, std::string p_value);
+	bool Read(int p_count, std::string& p_value);
 	template<typename T>
 	bool Write(T p_value);
 	template<typename T>
@@ -30,15 +34,20 @@ private:
 
 template <typename T>
 bool ByteStream::Write(T p_value)
-{
-	//assert(sizeof(p_value) <= sizeof(int) && "You are using a type larger then 4 bytes");
+{	
 	if (m_length == 0 || m_capacity == m_length)
 	{
 		reserve(m_capacity + sizeof(T));
 	}
 	m_cursor = m_data + m_length;
-	*reinterpret_cast<T *>(m_cursor) = p_value;
-	//m_cursor += sizeof(T);
+	try
+	{
+		 *reinterpret_cast<T *>(m_cursor) = p_value;
+	}
+	catch(std::exception& e)
+	{
+		std::cout << "Standard exception: " << e.what() << std::endl;		
+	}
 	m_length += sizeof(T);
 	return true;
 }

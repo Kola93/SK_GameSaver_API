@@ -15,28 +15,28 @@ Serializer::~Serializer()
 
 bool Serializer::Serialize(const int& value)
 {
-	if(m_byteStream->Write(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Write(value);
 }
-
 
 bool Serializer::Serialize(const float & value)
 {
-	if (m_byteStream->Write(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Write(value);
+}
+
+bool Serializer::Serialize(const double & value)
+{
+	return m_byteStream->Write(value);
 }
 
 bool Serializer::Serialize(const bool & value)
 {
-	if (m_byteStream->Write(value))
-	{
-		return true;
-	}
-	return false;
+	return m_byteStream->Write(value);
+}
+bool Serializer::Serialize(int count, const std::string & value)
+{
+	return m_byteStream->Write(count, value);
+}
+bool Serializer::Serialize(const char & value)
+{
+	return m_byteStream->Write(value);
 }

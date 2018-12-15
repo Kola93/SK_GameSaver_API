@@ -33,6 +33,44 @@ int ByteStream::GetSize()
 	return m_length;
 }
 
+bool ByteStream::Write(int p_count, std::string p_value)
+{
+	assert(p_count == p_value.size() && "Error: Number of chars is different from size of string");
+	
+	if (m_length == 0 || m_capacity == m_length)
+	{
+		reserve(m_capacity + p_value.size());
+	}
+
+	m_cursor = m_data + m_length;
+	for (int i = 0; i < p_count; ++i)
+	{
+		try
+		{
+			*reinterpret_cast<char *>(m_cursor) = p_value[i];
+			m_cursor++;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "Standard exception: " << e.what() << std::endl;
+		}
+	}
+
+	m_length += p_count;
+	return true;
+}
+
+bool ByteStream::Read(int p_count, std::string& p_value)
+{
+
+	for (int i = 0; i < p_count; ++i)
+	{		
+		p_value += *reinterpret_cast<char *>(m_cursor);
+		m_cursor ++;
+	}
+	return true;
+}
+
 void ByteStream::reserve(const int& newAmount)
 {
 	char* xNewData = new char[newAmount];
@@ -43,8 +81,7 @@ void ByteStream::reserve(const int& newAmount)
 
 	m_data = xNewData;
 	//m_cursor = m_data + m_length;
-	m_capacity = newAmount;
-	
+	m_capacity = newAmount;	
 }
 
 
