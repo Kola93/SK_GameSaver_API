@@ -27,13 +27,14 @@ private:
 	void reserve(const int& p_NewAmount);
 };
 
+
 template <typename T>
 bool ByteStream::Write(T p_value)
 {
 	//assert(sizeof(p_value) <= sizeof(int) && "You are using a type larger then 4 bytes");
-	if(m_length == 0 || m_capacity == m_length)
+	if (m_length == 0 || m_capacity == m_length)
 	{
-		reserve(m_capacity + sizeof(T));		
+		reserve(m_capacity + sizeof(T));
 	}
 	m_cursor = m_data + m_length;
 	*reinterpret_cast<T *>(m_cursor) = p_value;
@@ -42,6 +43,7 @@ bool ByteStream::Write(T p_value)
 	return true;
 }
 
+
 template<typename T>
 bool ByteStream::Read(T& p_value)
 {
@@ -49,4 +51,3 @@ bool ByteStream::Read(T& p_value)
 	m_cursor += sizeof(T);
 	return true;
 }
-

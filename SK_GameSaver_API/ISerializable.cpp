@@ -6,4 +6,8 @@ ISerializable::ISerializable()
 {
 }
 
+ISerializable::~ISerializable()
+{
+}
+
 

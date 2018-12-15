@@ -16,6 +16,7 @@ Deserializer::~Deserializer()
 {
 }
 
+
 bool Deserializer::Deserialize(int& value)
 {
 	if (m_byteStream->Read(value))
@@ -24,21 +25,21 @@ bool Deserializer::Deserialize(int& value)
 	}
 	return false;
 }
-//
-//bool Deserializer::Deserialize(float & value)
-//{
-//	if (m_byteStream->Read(value))
-//	{
-//		return true;
-//	}
-//	return false;
-//}
-//
-//bool Deserializer::Deserialize(bool & value)
-//{
-//	if (m_byteStream->Read(value))
-//	{
-//		return true;
-//	}
-//	return false;
-//}
+
+bool Deserializer::Deserialize(float & value)
+{
+	if (m_byteStream->Read(value))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Deserializer::Deserialize(bool & value)
+{
+	if (m_byteStream->Read(value))
+	{
+		return true;
+	}
+	return false;
+}

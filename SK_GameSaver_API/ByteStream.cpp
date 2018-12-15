@@ -46,3 +46,5 @@ void ByteStream::reserve(const int& newAmount)
 	m_capacity = newAmount;
 	
 }
+
+

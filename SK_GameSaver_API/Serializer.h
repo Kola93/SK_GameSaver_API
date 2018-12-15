@@ -10,12 +10,12 @@ public:
 	~Serializer();
 
 	bool Serialize(const int& value) override;
-	//bool Serialize(const float& value) override;
-	//bool Serialize(const bool& value) override;
+	bool Serialize(const float& value) override;
+	bool Serialize(const bool& value) override;
 
 	bool Deserialize(int& value) override { return true; };
-	//bool Deserialize(const float& value) override { return true; };
-	//bool Deserialize(const bool& value) override { return true; };
+	bool Deserialize(float& value) override { return true; };
+	bool Deserialize(bool& value) override { return true; };
 private:
 };
 

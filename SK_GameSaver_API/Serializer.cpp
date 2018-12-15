@@ -24,21 +24,22 @@ bool Serializer::Serialize(const int& value)
 	}
 	return false;
 }
-//
-//bool Serializer::Serialize(const float & value)
-//{
-//	if (m_byteStream->Write(value))
-//	{
-//		return true;
-//	}
-//	return false;
-//}
-//
-//bool Serializer::Serialize(const bool & value)
-//{
-//	if (m_byteStream->Write(value))
-//	{
-//		return true;
-//	}
-//	return false;
-//}
+
+
+bool Serializer::Serialize(const float & value)
+{
+	if (m_byteStream->Write(value))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Serializer::Serialize(const bool & value)
+{
+	if (m_byteStream->Write(value))
+	{
+		return true;
+	}
+	return false;
+}
