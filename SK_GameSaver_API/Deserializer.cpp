@@ -2,9 +2,7 @@
 #include "Serializer.h"
 
 
-Deserializer::Deserializer()
-{
-}
+
 
 Deserializer::Deserializer(std::shared_ptr<ByteStream> p_byteStream)
 {

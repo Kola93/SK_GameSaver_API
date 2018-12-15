@@ -4,10 +4,9 @@ class ISerializable;
 class GameSaver
 {
 public:
-	GameSaver();
+	GameSaver() = delete;
 	GameSaver(std::string p_path);
 	~GameSaver();
-
 
 	void Save( ISerializable& p_serializable);
 	void Load (ISerializable& p_serializable);

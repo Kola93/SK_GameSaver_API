@@ -2,9 +2,6 @@
 
 
 
-Serializer::Serializer()
-{
-}
 
 Serializer::Serializer(std::shared_ptr<ByteStream> p_byteStream)
 {

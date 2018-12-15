@@ -27,3 +27,38 @@ TEST(AUserClass, CanSaveAndLoadData) {
 	EXPECT_EQ(xUserStructSave.bool_value, xUserStructLoad.bool_value);
 }
 
+TEST(AUserClass, CanSaveAndLoadDataWithBinExtention) {
+
+	UserStruct xUserStructSave;
+	xUserStructSave.int_value = 5;
+	xUserStructSave.float_value = 8.99f;
+	xUserStructSave.bool_value = true;
+
+	GameSaver GS("testUserStruct.bin");
+	GS.Save(xUserStructSave);
+
+	UserStruct xUserStructLoad;
+	GS.Load(xUserStructLoad);
+
+	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
+	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
+	EXPECT_EQ(xUserStructSave.bool_value, xUserStructLoad.bool_value);
+}
+
+TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomExtention) {
+
+	UserStruct xUserStructSave;
+	xUserStructSave.int_value = 5;
+	xUserStructSave.float_value = 8.99f;
+	xUserStructSave.bool_value = true;
+
+	GameSaver GS("testUserStruct.myfile");
+	GS.Save(xUserStructSave);
+
+	UserStruct xUserStructLoad;
+	GS.Load(xUserStructLoad);
+
+	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
+	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
+	EXPECT_EQ(xUserStructSave.bool_value, xUserStructLoad.bool_value);
+}

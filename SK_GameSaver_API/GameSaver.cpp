@@ -6,9 +6,6 @@
 #include "Deserializer.h"
 #include "UserTest.h"
 
-GameSaver::GameSaver()
-{
-}
 
 GameSaver::GameSaver(std::string p_path)
 {
@@ -24,32 +21,49 @@ void GameSaver::Save( ISerializable& p_serializable)
 {
 	auto xByteStream_ptr = std::make_shared<ByteStream>();
 	const auto xSerializer_ptr = std::make_shared<Serializer>(xByteStream_ptr);
-	//Serializer* xSerializer = new Serializer(xByteStream_ptr);
 	
-	p_serializable.Serialize(xSerializer_ptr);
+	if(!p_serializable.Serialize(xSerializer_ptr))
+	{
+		
+	}
 
-	std::ofstream ofile(m_path, std::ios::out);
-
-	ofile.write(reinterpret_cast<char*>(&xByteStream_ptr->GetBuffer()[0]), xByteStream_ptr->GetSize());
-	ofile.close();
+	std::ofstream outfile(m_path, std::ios::out);
+	if(!outfile.is_open())
+	{
+		//TODO: EXCEPTION		
+	}
+	else
+	{
+		outfile.write(&xByteStream_ptr->GetBuffer()[0], xByteStream_ptr->GetSize());
+		outfile.close();
+	}	
 }
 
 void GameSaver::Load(ISerializable& p_serializable)
 {	
+	std::ifstream infile(m_path, std::ios::in);
+	if(!infile.is_open())
+	{
+		//TODO: EXCEPTION
+	}
+	else
+	{
+		infile.seekg(0, infile.end);
+		int length = static_cast<int>(infile.tellg());
+		infile.seekg(0, infile.beg);
+		// TODO CHECK IF LENGHT != -1
+		if(length <= 0)
+		{
+			// TODO: EXCEPTION
+		}
+		auto xByteStream_ptr = std::make_shared<ByteStream>(length);
+		const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);
 
-	std::ifstream ifile(m_path, std::ios::in);
-	ifile.seekg(0, ifile.end);
-	int length = static_cast<int>(ifile.tellg());
-	ifile.seekg(0, ifile.beg);
-	//unsigned char* buffer2 = new unsigned char[length];
+		infile.read(&xByteStream_ptr->GetBuffer()[0], xByteStream_ptr->GetSize());
+		p_serializable.Deserialize(xDeserializer_ptr);
+		infile.close();
+	}
 
-	// TODO CHECK IF LENGHT != -1
-
-	auto xByteStream_ptr = std::make_shared<ByteStream>(length);
-	const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);
-
-	ifile.read(reinterpret_cast<char*>(&xByteStream_ptr->GetBuffer()[0]), xByteStream_ptr->GetSize());
-	p_serializable.Deserialize(xDeserializer_ptr);
-	ifile.close();
+	
 }
 

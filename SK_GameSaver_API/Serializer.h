@@ -5,17 +5,15 @@
 class Serializer : public IDataHandler
 {
 public:
-	Serializer();
+	Serializer() = delete;
 	Serializer(std::shared_ptr<ByteStream> p_byteStream);
 	~Serializer();
 
 	bool Serialize(const int& value) override;
 	bool Serialize(const float& value) override;
 	bool Serialize(const bool& value) override;
+	//bool Serialize(const std::string& value) 
 
-	bool Deserialize(int& value) override { return true; };
-	bool Deserialize(float& value) override { return true; };
-	bool Deserialize(bool& value) override { return true; };
 private:
 };
 
