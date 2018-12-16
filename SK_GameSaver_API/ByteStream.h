@@ -12,6 +12,7 @@ public:
 	~ByteStream();
 
 	char* GetBuffer();
+	char* Begin();
 	int GetSize();
 
 	bool Write(int p_count, std::string p_value);

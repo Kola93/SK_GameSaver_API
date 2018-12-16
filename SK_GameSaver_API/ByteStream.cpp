@@ -21,6 +21,7 @@ ByteStream::ByteStream(int p_size)
 
 ByteStream::~ByteStream()
 {
+	delete[] m_data;
 }
 
 char * ByteStream::GetBuffer()
@@ -35,7 +36,7 @@ int ByteStream::GetSize()
 
 bool ByteStream::Write(int p_count, std::string p_value)
 {
-	assert(p_count == p_value.size() && "Error: Number of chars is different from size of string");
+	assert(p_count == static_cast<int>(p_value.size()) && "Error: Number of chars is different from size of string");
 	
 	if (m_length == 0 || m_capacity == m_length)
 	{
@@ -47,7 +48,7 @@ bool ByteStream::Write(int p_count, std::string p_value)
 	{
 		try
 		{
-			*reinterpret_cast<char *>(m_cursor) = p_value[i];
+			*reinterpret_cast<char *>(m_cursor) = p_value.at(i);
 			m_cursor++;
 		}
 		catch (std::exception& e)
@@ -84,7 +85,7 @@ void ByteStream::Reserve(const int& p_NewAmount)
 
 bool ByteStream::IsOutsideEndStreamBoundary()
 {
-	int length = m_cursor - m_data;
+	int length = static_cast<int>(m_cursor - m_data);
 	if(length + 1 > m_length)
 	{
 		return true;

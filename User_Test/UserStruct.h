@@ -1,5 +1,4 @@
 #pragma once
-#include "../SK_GameSaver_API/IDataHandler.h"
 #include "../SK_GameSaver_API/ISerializable.h"
 
 class UserStruct : public ISerializable
