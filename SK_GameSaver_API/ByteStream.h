@@ -11,8 +11,9 @@ public:
 	ByteStream(int p_size);
 	~ByteStream();
 
-	char* GetBuffer();
-	char* Begin();
+	void DeleteEmptySpace();
+
+	char* GetBuffer();	
 	int GetSize();
 
 	bool Write(int p_count, std::string p_value);
@@ -23,7 +24,7 @@ public:
 
 	template<typename T>
 	bool Read(T& p_value);
-private:
+private:	
 	int m_capacity;
 	int m_length;
 	char* m_data;
@@ -40,7 +41,7 @@ bool ByteStream::Write(T p_value)
 {	
 	if (m_length == 0 || m_capacity == m_length)
 	{
-		Reserve(m_capacity + sizeof(T));
+		Reserve(m_capacity + sizeof(T) * 2);
 	}
 	m_cursor = m_data + m_length;
 	try
@@ -67,3 +68,4 @@ bool ByteStream::Read(T& p_value)
 	}
 	return false;
 }
+ 

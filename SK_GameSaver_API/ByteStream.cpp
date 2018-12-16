@@ -24,6 +24,11 @@ ByteStream::~ByteStream()
 	delete[] m_data;
 }
 
+void ByteStream::DeleteEmptySpace()
+{
+	Reserve(m_length);
+}
+
 char * ByteStream::GetBuffer()
 {
 	return m_data;
@@ -40,7 +45,7 @@ bool ByteStream::Write(int p_count, std::string p_value)
 	
 	if (m_length == 0 || m_capacity == m_length)
 	{
-		Reserve(m_capacity + p_value.size());
+		Reserve(m_capacity + static_cast<int>(p_value.size()));
 	}
 
 	m_cursor = m_data + m_length;
@@ -48,7 +53,7 @@ bool ByteStream::Write(int p_count, std::string p_value)
 	{
 		try
 		{
-			*reinterpret_cast<char *>(m_cursor) = p_value.at(i);
+			*reinterpret_cast<char *>(m_cursor) = p_value[i];
 			m_cursor++;
 		}
 		catch (std::exception& e)

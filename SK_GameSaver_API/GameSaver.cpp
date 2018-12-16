@@ -26,7 +26,7 @@ SaveandLoad_Result GameSaver::Save( ISerializable& p_serializable)
 	{
 		return FAILED_COULD_NOT_SERIALIZE_YOUR_DATA;
 	}
-
+	xByteStream_ptr->DeleteEmptySpace();
 	std::ofstream outfile(m_path, std::ios::out);
 	if(!outfile.is_open())
 	{
