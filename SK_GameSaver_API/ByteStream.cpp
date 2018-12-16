@@ -22,6 +22,7 @@ ByteStream::ByteStream(int p_size)
 ByteStream::~ByteStream()
 {
 	delete[] m_data;
+	m_data = nullptr;
 }
 
 void ByteStream::DeleteEmptySpace()
@@ -58,7 +59,8 @@ bool ByteStream::Write(int p_count, std::string p_value)
 		}
 		catch (std::exception& e)
 		{
-			std::cout << "Standard exception: " << e.what() << std::endl;
+			std::cout << "Exception: " << e.what() << std::endl;
+			return false;
 		}
 	}
 
@@ -69,9 +71,17 @@ bool ByteStream::Write(int p_count, std::string p_value)
 bool ByteStream::Read(int p_count, std::string& p_value)
 {
 	for (int i = 0; i < p_count; ++i)
-	{		
-		p_value += *reinterpret_cast<char *>(m_cursor);
-		m_cursor ++;
+	{
+		try
+		{
+			p_value += *reinterpret_cast<char *>(m_cursor);
+			m_cursor++;
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "Exception: " << e.what() << std::endl;
+			return false;
+		}	
 	}
 	return true;
 }
@@ -85,6 +95,7 @@ void ByteStream::Reserve(const int& p_NewAmount)
 	m_data = nullptr;
 
 	m_data = xNewData;
+
 	m_capacity = p_NewAmount;
 }
 
@@ -96,6 +107,11 @@ bool ByteStream::IsOutsideEndStreamBoundary()
 		return true;
 	}
 	return false;
+}
+
+void ByteStream::ResetCursor() 
+{
+	m_cursor = m_data;
 }
 
 

@@ -15,6 +15,7 @@ public:
 
 	char* GetBuffer();	
 	int GetSize();
+	void ResetCursor();
 
 	bool Write(int p_count, std::string p_value);
 	bool Read(int p_count, std::string& p_value);
@@ -28,7 +29,6 @@ private:
 	int m_capacity;
 	int m_length;
 	char* m_data;
-
 	char* m_cursor;
 
 	void Reserve(const int& p_NewAmount);
@@ -50,7 +50,8 @@ bool ByteStream::Write(T p_value)
 	}
 	catch(std::exception& e)
 	{
-		std::cout << "Standard exception: " << e.what() << std::endl;		
+		std::cout << "Exception: " << e.what() << std::endl;		
+		return false;
 	}
 	m_length += sizeof(T);
 	return true;
@@ -61,8 +62,16 @@ template<typename T>
 bool ByteStream::Read(T& p_value)
 {
 	if(!IsOutsideEndStreamBoundary())
-	{
-		p_value = *reinterpret_cast<T *>(m_cursor);
+	{	
+		try
+		{
+			p_value = *reinterpret_cast<T *>(m_cursor);
+		}
+		catch (std::exception& e)
+		{
+			std::cout << "Exception: " << e.what() << std::endl;
+			return false;
+		}
 		m_cursor += sizeof(T);
 		return true;
 	}
