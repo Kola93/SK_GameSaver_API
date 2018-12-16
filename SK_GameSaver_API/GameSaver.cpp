@@ -4,14 +4,11 @@
 #include <fstream>
 #include <iostream>
 #include "Deserializer.h"
-#include "UserTest.h"
-
 
 GameSaver::GameSaver(std::string p_path)
 {
 	m_path = p_path;
 }
-
 
 GameSaver::~GameSaver()
 {
@@ -27,7 +24,7 @@ SaveandLoad_Result GameSaver::Save( ISerializable& p_serializable)
 		return FAILED_COULD_NOT_SERIALIZE_YOUR_DATA;
 	}
 	xByteStream_ptr->DeleteEmptySpace();
-	std::ofstream outfile(m_path, std::ios::out);
+	std::ofstream outfile(m_path, std::ios::binary);
 	if(!outfile.is_open())
 	{
 		return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
@@ -42,7 +39,7 @@ SaveandLoad_Result GameSaver::Save( ISerializable& p_serializable)
 
 SaveandLoad_Result GameSaver::Load(ISerializable& p_serializable)
 {	
-	std::ifstream infile(m_path, std::ios::in);
+	std::ifstream infile(m_path, std::ios::binary);
 	if(!infile.is_open())
 	{
 		return FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY;

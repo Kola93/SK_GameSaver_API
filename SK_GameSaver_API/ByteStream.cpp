@@ -63,7 +63,6 @@ bool ByteStream::Write(int p_count, std::string p_value)
 			return false;
 		}
 	}
-
 	m_length += p_count;
 	return true;
 }

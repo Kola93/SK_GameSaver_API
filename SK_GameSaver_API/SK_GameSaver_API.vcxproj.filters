@@ -33,9 +33,6 @@
     <ClCompile Include="Deserializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UserTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSaver.h">
@@ -48,9 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ByteStream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UserTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Deserializer.h">
