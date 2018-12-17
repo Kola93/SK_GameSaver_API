@@ -5,16 +5,21 @@
 #include <iostream>
 #include "Deserializer.h"
 
-GameSaver::GameSaver(std::string p_FilePath, std::string p_FileName, std::string p_extension, bool p_GenerateLogFIle)
+GameSaver::GameSaver(std::string p_FilePath, std::string p_FileName, std::string p_extension)
 {
 	m_FIlePath = p_FilePath;
 	m_FIleName = p_FileName;
 	m_FIleExtension = p_extension;
-	m_generateLogFile = p_GenerateLogFIle;
+	m_generateLogFile = false;
 }
 
 GameSaver::~GameSaver()
 {
+}
+
+void GameSaver::SetDebugActive()
+{
+	m_generateLogFile = true;
 }
 
 SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
@@ -44,7 +49,7 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 		std::ofstream outfile(m_FIlePath + m_FIleName + "_debug.log", std::ios::out);
 		if (!outfile.is_open())
 		{
-			return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
+			return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;
 		}
 		for (int i = 0; i < xLogHistory.size(); ++i)
 		{
