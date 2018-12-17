@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
-
+#include <vector>
 class ByteStream
 {
 public:
@@ -17,6 +17,7 @@ public:
 	int GetSize();
 	void ResetCursor();
 
+	std::vector<std::string> GetSaveHistory();
 	bool Write(int p_count, std::string p_value);
 	bool Read(int p_count, std::string& p_value);
 
@@ -30,6 +31,7 @@ private:
 	int m_length;
 	char* m_data;
 	char* m_cursor;
+	std::vector<std::string> m_debugBuffer;
 
 	void Reserve(const int& p_NewAmount);
 	bool IsOutsideEndStreamBoundary();
@@ -54,6 +56,7 @@ bool ByteStream::Write(T p_value)
 		return false;
 	}
 	m_length += sizeof(T);
+	m_debugBuffer.push_back(std::to_string(p_value));
 	return true;
 }
 

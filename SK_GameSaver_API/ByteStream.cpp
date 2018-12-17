@@ -40,6 +40,11 @@ int ByteStream::GetSize()
 	return m_length;
 }
 
+std::vector<std::string> ByteStream::GetSaveHistory()
+{
+	return m_debugBuffer;
+}
+
 bool ByteStream::Write(int p_count, std::string p_value)
 {
 	assert(p_count == static_cast<int>(p_value.size()) && "Error: Number of chars is different from size of string");
@@ -63,6 +68,7 @@ bool ByteStream::Write(int p_count, std::string p_value)
 			return false;
 		}
 	}
+	m_debugBuffer.push_back(p_value);
 	m_length += p_count;
 	return true;
 }

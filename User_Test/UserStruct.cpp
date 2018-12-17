@@ -24,12 +24,6 @@ bool UserStruct::Serialize(std::shared_ptr<Serializer> p_serializer)
 		return false;
 	if (!p_serializer->Serialize(double_value))
 		return false;
-	/*for (int i = 0; i < string_value.size(); ++i)
-	{
-		if (!p_serializer->Serialize(string_value[i]))
-			return false;
-	}
-	*/
 	return true;
 }
 
@@ -47,11 +41,6 @@ bool UserStruct::Deserialize(std::shared_ptr<Deserializer> p_deserializer)
 		return false;
 	if (!p_deserializer->Deserialize(double_value))
 		return false;
-	/*for (int i = 0; i < string_value.size(); ++i)
-	{
-		if (!p_deserializer->Deserialize(string_value[i]))
-			return false;
-	}*/
 	return true;
 }
 

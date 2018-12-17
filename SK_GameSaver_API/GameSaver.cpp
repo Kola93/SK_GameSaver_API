@@ -5,16 +5,19 @@
 #include <iostream>
 #include "Deserializer.h"
 
-GameSaver::GameSaver(std::string p_path)
+GameSaver::GameSaver(std::string p_FilePath, std::string p_FileName, std::string p_extension, bool p_GenerateLogFIle)
 {
-	m_path = p_path;
+	m_FIlePath = p_FilePath;
+	m_FIleName = p_FileName;
+	m_FIleExtension = p_extension;
+	m_generateLogFile = p_GenerateLogFIle;
 }
 
 GameSaver::~GameSaver()
 {
 }
 
-SaveandLoad_Result GameSaver::Save( ISerializable& p_serializable)
+SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 {
 	const auto xByteStream_ptr = std::make_shared<ByteStream>();
 	const auto xSerializer_ptr = std::make_shared<Serializer>(xByteStream_ptr);
@@ -24,22 +27,38 @@ SaveandLoad_Result GameSaver::Save( ISerializable& p_serializable)
 		return FAILED_COULD_NOT_SERIALIZE_YOUR_DATA;
 	}
 	xByteStream_ptr->DeleteEmptySpace();
-	std::ofstream outfile(m_path, std::ios::binary);
+
+	std::string completeDirectory = m_FIlePath + m_FIleName + m_FIleExtension;
+	std::ofstream outfile(completeDirectory, std::ios::binary);
 	if(!outfile.is_open())
 	{
 		return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
 	}
-	else
+	outfile.write(xByteStream_ptr->GetBuffer(), xByteStream_ptr->GetSize());
+	outfile.close();
+
+	if(m_generateLogFile)
 	{
-		outfile.write(xByteStream_ptr->GetBuffer(), xByteStream_ptr->GetSize());
+		auto xLogHistory = xByteStream_ptr->GetSaveHistory();
+
+		std::ofstream outfile(m_FIlePath + m_FIleName + "_debug.log", std::ios::out);
+		if (!outfile.is_open())
+		{
+			return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
+		}
+		for (int i = 0; i < xLogHistory.size(); ++i)
+		{
+			outfile << xLogHistory[i] << std::endl;
+		}
 		outfile.close();
 	}
+
 	return SUCCESS;
 }
 
 SaveandLoad_Result GameSaver::Load(ISerializable& p_serializable)
 {	
-	std::ifstream infile(m_path, std::ios::binary);
+	std::ifstream infile(m_FIlePath + m_FIleName + m_FIleExtension, std::ios::binary);
 	if(!infile.is_open())
 	{
 		return FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY;

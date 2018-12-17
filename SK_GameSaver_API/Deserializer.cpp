@@ -40,8 +40,8 @@ bool Deserializer::Deserialize(char & value)
 	return m_byteStream->Read(value);
 }
 
-bool Deserializer::Deserialize(int count, std::string & value)
+bool Deserializer::Deserialize(int length, std::string & value)
 {
-	return m_byteStream->Read(count, value);
+	return m_byteStream->Read(length, value);
 }
 

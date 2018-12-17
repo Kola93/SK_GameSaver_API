@@ -13,7 +13,7 @@ public:
 	virtual bool Serialize(const float& value);
 	virtual bool Serialize(const double& value);
 	virtual bool Serialize(const bool& value);
-	virtual bool Serialize(int count, const std::string& value);
+	virtual bool Serialize(int length, const std::string& value);
 	virtual bool Serialize(const char& value);
 private:
 	std::shared_ptr<ByteStream> m_byteStream;

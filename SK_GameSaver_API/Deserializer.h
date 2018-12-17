@@ -14,7 +14,7 @@ public:
 	virtual bool Deserialize(double& value);
 	virtual bool Deserialize(bool& value);
 	virtual bool Deserialize(char& value);
-	virtual bool Deserialize(int count, std::string& value);
+	virtual bool Deserialize(int length, std::string& value);
 private:
 	std::shared_ptr<ByteStream> m_byteStream;
 };

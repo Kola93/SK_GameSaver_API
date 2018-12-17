@@ -32,9 +32,9 @@ bool Serializer::Serialize(const bool & value)
 {
 	return m_byteStream->Write(value);
 }
-bool Serializer::Serialize(int count, const std::string & value)
+bool Serializer::Serialize(int length, const std::string & value)
 {
-	return m_byteStream->Write(count, value);
+	return m_byteStream->Write(length, value);
 }
 bool Serializer::Serialize(const char & value)
 {

@@ -18,11 +18,13 @@ TEST(AUserClass, CanSaveAndLoadDataOfAnyType) {
 	xUserStructSave.string_value = "Save";
 	xUserStructSave.double_value = 0.58584848114495952;
 
-	GameSaver GS("testUserStruct.txt");
-	GS.Save(xUserStructSave);
+	GameSaver GS("./SaveFolder/","testUserStruct",".txt", false);
+	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
+	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
 	UserStruct xUserStructLoad;
-	GS.Load(xUserStructLoad);
+	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
+	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
 
 	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
 	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
@@ -41,11 +43,13 @@ TEST(AUserClass, CanSaveAndLoadDataWithBinExtention) {
 	xUserStructSave.char_value = 'd';
 	xUserStructSave.string_value = "Save";
 
-	GameSaver GS("testUserStruct.bin");
-	GS.Save(xUserStructSave);
+	GameSaver GS("./SaveFolder/", "testUserStruct", ".bin", false);
+	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
+	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
 	UserStruct xUserStructLoad;
-	GS.Load(xUserStructLoad);
+	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
+	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
 
 	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
 	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
@@ -64,11 +68,13 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomExtention) {
 	xUserStructSave.char_value = 'd';
 	xUserStructSave.string_value = "Save";
 
-	GameSaver GS("testUserStruct.myfile");
-	GS.Save(xUserStructSave);
+	GameSaver GS("./SaveFolder/", "testUserStruct", ".myfile", false);
+	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
+	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
 	UserStruct xUserStructLoad;
-	GS.Load(xUserStructLoad);
+	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
+	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
 
 	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
 	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
@@ -79,11 +85,19 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomExtention) {
 }
 
 TEST(TheUser, GetErrorWhenLoadingANotExistingFile) {
-	GameSaver GS("xxx.txt");
+	GameSaver GS("./SaveFolder/", "xxx", ".txt", true);
 
 	UserStruct xUserStructLoad;
 	SaveandLoad_Result result = GS.Load(xUserStructLoad);
 	EXPECT_EQ(result, SaveandLoad_Result::FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY);
+}
+
+TEST(TheUser, GetErrorWhenLoadingAFileWithNoData) {
+	GameSaver GS("./SaveFolder/", "EmptyFile", ".txt", true);
+
+	UserStruct xUserStructLoad;
+	SaveandLoad_Result result = GS.Load(xUserStructLoad);
+	EXPECT_EQ(result, SaveandLoad_Result::FAILED_FILE_IS_EMPTY);
 }
 
 TEST(TheUser, GetErrorWhenCreatingFileWithWrongDirectory) {
@@ -103,15 +117,13 @@ TEST(TheUser, GetErrorWhenCreatingFileWithWrongDirectory) {
 			return true;
 		}
 	};
-	GameSaver GS("/user/wrongdirectory/text.txt");
+	GameSaver GS("../user/wrongdirectory/", "text", ".txt", true);
 	UserStruct2 xUserStruct2Save;
-
 	SaveandLoad_Result Saveresult = GS.Save(xUserStruct2Save);
-
 	EXPECT_EQ(Saveresult, SaveandLoad_Result::FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY);
 }
 
-TEST(TheUser, GetErrorWhenTryingToDeserializeDataNotAvailable) {
+TEST(TheUser, GetErrorWhenTryingToDeserializeDataOutOfRange) {
 	struct UserStruct2 : public ISerializable
 	{
 		int int_value = 0;
@@ -130,11 +142,12 @@ TEST(TheUser, GetErrorWhenTryingToDeserializeDataNotAvailable) {
 			return true;
 		}
 	};
-	GameSaver GS("TestUserStruct2.txt");
+	GameSaver GS("./SaveFolder/", "TestUserStruct2", ".txt", true);
 	UserStruct2 xUserStruct2Save;
 
-	SaveandLoad_Result Saveresult = GS.Save(xUserStruct2Save);
-	SaveandLoad_Result Loadresult = GS.Load(xUserStruct2Save);
-
-	EXPECT_EQ(Loadresult, SaveandLoad_Result::FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA);
+	SaveandLoad_Result SaveResult = GS.Save(xUserStruct2Save);
+	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
+	SaveandLoad_Result LoadResult = GS.Load(xUserStruct2Save);
+	EXPECT_EQ(LoadResult, SaveandLoad_Result::FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA);
 }
+
