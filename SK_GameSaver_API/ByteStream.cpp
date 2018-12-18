@@ -57,16 +57,8 @@ bool ByteStream::Write(int p_count, std::string p_value)
 	m_cursor = m_data + m_length;
 	for (int i = 0; i < p_count; ++i)
 	{
-		try
-		{
-			*reinterpret_cast<char *>(m_cursor) = p_value[i];
-			m_cursor++;
-		}
-		catch (std::exception& e)
-		{
-			std::cout << "Exception: " << e.what() << std::endl;
-			return false;
-		}
+		*reinterpret_cast<char *>(m_cursor) = p_value[i];
+		m_cursor++;
 	}
 	m_debugBuffer.push_back(p_value);
 	m_length += p_count;
@@ -77,16 +69,8 @@ bool ByteStream::Read(int p_count, std::string& p_value)
 {
 	for (int i = 0; i < p_count; ++i)
 	{
-		try
-		{
-			p_value += *reinterpret_cast<char *>(m_cursor);
-			m_cursor++;
-		}
-		catch (std::exception& e)
-		{
-			std::cout << "Exception: " << e.what() << std::endl;
-			return false;
-		}	
+		p_value += *(reinterpret_cast<char *>(m_cursor));
+		m_cursor++;	
 	}
 	return true;
 }

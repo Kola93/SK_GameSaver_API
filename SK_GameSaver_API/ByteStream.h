@@ -46,15 +46,9 @@ bool ByteStream::Write(T p_value)
 		Reserve(m_capacity + sizeof(T) * 2);
 	}
 	m_cursor = m_data + m_length;
-	try
-	{
-		 *reinterpret_cast<T *>(m_cursor) = p_value;
-	}
-	catch(std::exception& e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;		
-		return false;
-	}
+	
+	 *reinterpret_cast<T *>(m_cursor) = p_value;
+	
 	m_length += sizeof(T);
 	m_debugBuffer.push_back(std::to_string(p_value));
 	return true;
@@ -66,15 +60,8 @@ bool ByteStream::Read(T& p_value)
 {
 	if(!IsOutsideEndStreamBoundary())
 	{	
-		try
-		{
-			p_value = *reinterpret_cast<T *>(m_cursor);
-		}
-		catch (std::exception& e)
-		{
-			std::cout << "Exception: " << e.what() << std::endl;
-			return false;
-		}
+		p_value = *(reinterpret_cast<T *>(m_cursor));
+		
 		m_cursor += sizeof(T);
 		return true;
 	}

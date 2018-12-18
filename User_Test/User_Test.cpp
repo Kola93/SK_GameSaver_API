@@ -35,33 +35,7 @@ TEST(AUserClass, CanSaveAndLoadDataOfAnyType) {
 	EXPECT_EQ(xUserStructSave.double_value, xUserStructLoad.double_value);
 }
 
-TEST(AUserClass, CanSaveAndLoadDataWithBinExtention) {
-
-	UserStruct xUserStructSave;
-	xUserStructSave.int_value = 5;
-	xUserStructSave.float_value = 8.99f;
-	xUserStructSave.bool_value = true;
-	xUserStructSave.char_value = 'd';
-	xUserStructSave.string_value = "Save";
-
-	GameSaver GS("./SaveFolder/", "testUserStruct", ".bin");
-	GS.SetDebugActive();
-	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
-	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
-
-	UserStruct xUserStructLoad;
-	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
-	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
-
-	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
-	EXPECT_EQ(xUserStructSave.float_value, xUserStructLoad.float_value);
-	EXPECT_EQ(xUserStructSave.bool_value, xUserStructLoad.bool_value);
-	EXPECT_EQ(xUserStructSave.char_value, xUserStructLoad.char_value);
-	EXPECT_EQ(xUserStructSave.string_value, xUserStructLoad.string_value);
-	EXPECT_EQ(xUserStructSave.double_value, xUserStructLoad.double_value);
-}
-
-TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomExtention) {
+TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 
 	UserStruct xUserStructSave;
 	xUserStructSave.int_value = 5;
