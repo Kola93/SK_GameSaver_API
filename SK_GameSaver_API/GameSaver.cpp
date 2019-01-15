@@ -10,6 +10,13 @@ GameSaver::GameSaver(std::string p_FilePath, std::string p_FileName, std::string
 	m_FIlePath = p_FilePath;
 	m_FIleName = p_FileName;
 	m_FIleExtension = p_extension;
+	m_FullFilePath = m_FIlePath + m_FIleName + m_FIleExtension;
+	m_generateLogFile = false;
+}
+
+GameSaver::GameSaver(std::string p_FilePath)
+{
+	m_FIleExtension = p_FilePath;
 	m_generateLogFile = false;
 }
 
@@ -27,7 +34,7 @@ SaveandLoad_Result GameSaver::GenerateFileLog(const std::shared_ptr<ByteStream> 
 	{
 		return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;
 	}
-	for (int i = 0; i < xLogHistory.size(); ++i)
+	for (size_t i = 0; i < xLogHistory.size(); ++i)
 	{
 		outfile_debug << xLogHistory[i] << std::endl;
 	}
@@ -46,8 +53,7 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 	}
 	xByteStream_ptr->DeleteEmptySpace();
 
-	std::string completeDirectory = m_FIlePath + m_FIleName + m_FIleExtension;
-	std::ofstream outfile(completeDirectory, std::ios::binary);
+	std::ofstream outfile(m_FullFilePath, std::ios::binary);
 	if(!outfile.is_open())
 	{
 		return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
@@ -65,7 +71,7 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 
 SaveandLoad_Result GameSaver::Load(ISerializable* p_serializable)
 {	
-	std::ifstream infile(m_FIlePath + m_FIleName + m_FIleExtension, std::ios::binary);
+	std::ifstream infile(m_FullFilePath, std::ios::binary);
 	if(!infile.is_open())
 	{
 		return FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY;
