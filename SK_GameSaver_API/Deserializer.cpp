@@ -10,11 +10,6 @@ Deserializer::Deserializer(std::shared_ptr<ByteStream> p_byteStream)
 }
 
 
-Deserializer::~Deserializer()
-{
-}
-
-
 bool Deserializer::Deserialize(int& value)
 {
 	return m_byteStream->Read(value);

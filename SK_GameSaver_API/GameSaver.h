@@ -17,12 +17,12 @@ class GameSaver
 public:
 	GameSaver() = delete;
 	GameSaver(std::string p_FilePath, std::string p_FileName, std::string p_extension);
-	~GameSaver();
+	~GameSaver() = default;
 
 	SaveandLoad_Result Save (ISerializable& p_serializable);
 	SaveandLoad_Result Load (ISerializable& p_serializable);
 
-	void SetDebugActive();
+	void SetGenerateLogFileActive();
 private:
 	std::string m_FIlePath;
 	std::string m_FIleName;

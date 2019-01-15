@@ -7,7 +7,7 @@ class Deserializer
 public:
 	Deserializer() = delete;
 	Deserializer(std::shared_ptr<ByteStream> p_byteStream);
-	~Deserializer();
+	~Deserializer() = default;
 	
 	virtual bool Deserialize(int& value);
 	virtual bool Deserialize(float& value);

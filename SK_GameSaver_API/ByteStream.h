@@ -14,7 +14,7 @@ public:
 	void DeleteEmptySpace();
 
 	char* GetBuffer();	
-	int GetSize();
+	size_t GetSize();
 	void ResetCursor();
 
 	std::vector<std::string> GetSaveHistory();
@@ -27,13 +27,13 @@ public:
 	template<typename T>
 	bool Read(T& p_value);
 private:	
-	int m_capacity;
-	int m_length;
+	size_t m_capacity;
+	size_t m_length;
 	char* m_data;
 	char* m_cursor;
 	std::vector<std::string> m_debugBuffer;
 
-	void Reserve(const int& p_NewAmount);
+	void Reserve(const size_t& p_NewAmount);
 	bool IsOutsideEndStreamBoundary();
 };
 

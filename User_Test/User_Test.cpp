@@ -19,7 +19,7 @@ TEST(AUserClass, CanSaveAndLoadDataOfAnyType) {
 	xUserStructSave.double_value = 0.58584848114495952;
 
 	GameSaver GS("./SaveFolder/","testUserStruct",".txt");
-	GS.SetDebugActive();
+	GS.SetGenerateLogFileActive();
 	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
@@ -45,7 +45,7 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 	xUserStructSave.string_value = "Save";
 
 	GameSaver GS("./SaveFolder/", "testUserStruct", ".myfile");
-	GS.SetDebugActive();
+	GS.SetGenerateLogFileActive();
 	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 

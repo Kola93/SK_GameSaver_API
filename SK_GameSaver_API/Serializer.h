@@ -7,7 +7,7 @@ class Serializer
 public:
 	Serializer() = delete;
 	Serializer(std::shared_ptr<ByteStream> p_byteStream);
-	~Serializer();
+	~Serializer() = default;
 
 	virtual bool Serialize(const int& value);
 	virtual bool Serialize(const float& value);

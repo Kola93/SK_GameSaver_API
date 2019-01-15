@@ -35,7 +35,7 @@ char * ByteStream::GetBuffer()
 	return m_data;
 }
 
-int ByteStream::GetSize()
+size_t ByteStream::GetSize()
 {
 	return m_length;
 }
@@ -75,7 +75,7 @@ bool ByteStream::Read(int p_count, std::string& p_value)
 	return true;
 }
 
-void ByteStream::Reserve(const int& p_NewAmount)
+void ByteStream::Reserve(const size_t& p_NewAmount)
 {
 	char* xNewData = new char[p_NewAmount];
 
@@ -90,11 +90,9 @@ void ByteStream::Reserve(const int& p_NewAmount)
 
 bool ByteStream::IsOutsideEndStreamBoundary()
 {
-	int length = static_cast<int>(m_cursor - m_data);
+	size_t length = static_cast<size_t>(m_cursor - m_data);
 	if(length + 1 > m_length)
-	{
 		return true;
-	}
 	return false;
 }
 

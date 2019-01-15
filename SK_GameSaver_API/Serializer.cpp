@@ -9,10 +9,6 @@ Serializer::Serializer(std::shared_ptr<ByteStream> p_byteStream)
 }
 
 
-Serializer::~Serializer()
-{
-}
-
 bool Serializer::Serialize(const int& value)
 {
 	return m_byteStream->Write(value);
