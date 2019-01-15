@@ -18,6 +18,23 @@ void GameSaver::SetGenerateLogFileActive()
 	m_generateLogFile = true;
 }
 
+SaveandLoad_Result GameSaver::GenerateFileLog(const std::shared_ptr<ByteStream> xByteStream_ptr)
+{
+	auto xLogHistory = xByteStream_ptr->GetSaveHistory();
+
+	std::ofstream outfile_debug(m_FIlePath + m_FIleName + "_debug.log", std::ios::out);
+	if (!outfile_debug.is_open())
+	{
+		return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;
+	}
+	for (int i = 0; i < xLogHistory.size(); ++i)
+	{
+		outfile_debug << xLogHistory[i] << std::endl;
+	}
+	outfile_debug.close();
+	return SUCCESS;
+}
+
 SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 {
 	const auto xByteStream_ptr = std::make_shared<ByteStream>();
@@ -40,18 +57,7 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 
 	if(m_generateLogFile)
 	{
-		auto xLogHistory = xByteStream_ptr->GetSaveHistory();
-
-		std::ofstream outfile_debug(m_FIlePath + m_FIleName + "_debug.log", std::ios::out);
-		if (!outfile_debug.is_open())
-		{
-			return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;
-		}
-		for (int i = 0; i < xLogHistory.size(); ++i)
-		{
-			outfile_debug << xLogHistory[i] << std::endl;
-		}
-		outfile_debug.close();
+		return GenerateFileLog(xByteStream_ptr);
 	}
 
 	return SUCCESS;

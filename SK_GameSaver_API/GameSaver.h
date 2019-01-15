@@ -12,6 +12,7 @@ enum SaveandLoad_Result
 };
 
 class ISerializable;
+class ByteStream;
 class GameSaver
 {
 public:
@@ -23,10 +24,12 @@ public:
 	SaveandLoad_Result Load (ISerializable* p_serializable);
 
 	void SetGenerateLogFileActive();
+	
 private:
 	std::string m_FIlePath;
 	std::string m_FIleName;
 	std::string m_FIleExtension;
 	bool m_generateLogFile;
+	SaveandLoad_Result GenerateFileLog(const std::shared_ptr<ByteStream> xByteStream_ptr);
 };
 
