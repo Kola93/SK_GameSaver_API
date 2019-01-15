@@ -24,7 +24,7 @@ TEST(AUserClass, CanSaveAndLoadDataOfAnyType) {
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
 	UserStruct xUserStructLoad;
-	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
+	SaveandLoad_Result LoadResult = GS.Load(&xUserStructLoad);
 	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
 
 	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
@@ -50,7 +50,7 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
 
 	UserStruct xUserStructLoad;
-	SaveandLoad_Result LoadResult = GS.Load(xUserStructLoad);
+	SaveandLoad_Result LoadResult = GS.Load(&xUserStructLoad);
 	EXPECT_EQ(LoadResult, SaveandLoad_Result::SUCCESS);
 
 	EXPECT_EQ(xUserStructSave.int_value, xUserStructLoad.int_value);
@@ -64,7 +64,7 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 TEST(TheUser, GetErrorWhenLoadingANotExistingFile) {
 	GameSaver GS("./SaveFolder/", "xxx", ".txt");
 	UserStruct xUserStructLoad;
-	SaveandLoad_Result result = GS.Load(xUserStructLoad);
+	SaveandLoad_Result result = GS.Load(&xUserStructLoad);
 	EXPECT_EQ(result, SaveandLoad_Result::FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY);
 }
 
@@ -72,7 +72,7 @@ TEST(TheUser, GetErrorWhenLoadingAFileWithNoData) {
 	GameSaver GS("./SaveFolder/", "EmptyFile", ".txt");
 
 	UserStruct xUserStructLoad;
-	SaveandLoad_Result result = GS.Load(xUserStructLoad);
+	SaveandLoad_Result result = GS.Load(&xUserStructLoad);
 	EXPECT_EQ(result, SaveandLoad_Result::FAILED_FILE_IS_EMPTY);
 }
 
@@ -123,7 +123,7 @@ TEST(TheUser, GetErrorWhenTryingToDeserializeDataOutOfRange) {
 
 	SaveandLoad_Result SaveResult = GS.Save(xUserStruct2Save);
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
-	SaveandLoad_Result LoadResult = GS.Load(xUserStruct2Save);
+	SaveandLoad_Result LoadResult = GS.Load(&xUserStruct2Save);
 	EXPECT_EQ(LoadResult, SaveandLoad_Result::FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA);
 }
 

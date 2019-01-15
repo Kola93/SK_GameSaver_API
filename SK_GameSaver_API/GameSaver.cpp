@@ -57,7 +57,7 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 	return SUCCESS;
 }
 
-SaveandLoad_Result GameSaver::Load(ISerializable& p_serializable)
+SaveandLoad_Result GameSaver::Load(ISerializable* p_serializable)
 {	
 	std::ifstream infile(m_FIlePath + m_FIleName + m_FIleExtension, std::ios::binary);
 	if(!infile.is_open())
@@ -76,7 +76,7 @@ SaveandLoad_Result GameSaver::Load(ISerializable& p_serializable)
 	const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);
 
 	infile.read(xByteStream_ptr->GetBuffer(), xByteStream_ptr->GetSize());
-	if(!p_serializable.Deserialize(xDeserializer_ptr))
+	if(!p_serializable->Deserialize(xDeserializer_ptr))
 	{
 		return FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA;
 	}		

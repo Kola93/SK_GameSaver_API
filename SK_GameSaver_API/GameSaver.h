@@ -20,7 +20,7 @@ public:
 	~GameSaver() = default;
 
 	SaveandLoad_Result Save (ISerializable& p_serializable);
-	SaveandLoad_Result Load (ISerializable& p_serializable);
+	SaveandLoad_Result Load (ISerializable* p_serializable);
 
 	void SetGenerateLogFileActive();
 private:
