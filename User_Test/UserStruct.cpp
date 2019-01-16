@@ -37,7 +37,7 @@ bool UserStruct::Deserialize(std::shared_ptr<Deserializer> p_deserializer)
 		return false;
 	if (!p_deserializer->Deserialize(char_value))
 		return false;
-	if (!p_deserializer->Deserialize(4,string_value))
+	if (!p_deserializer->Deserialize(4, string_value))
 		return false;
 	if (!p_deserializer->Deserialize(double_value))
 		return false;

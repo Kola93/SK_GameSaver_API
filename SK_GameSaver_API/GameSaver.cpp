@@ -25,38 +25,38 @@ void GameSaver::SetGenerateLogFileActive()
 	m_generateLogFile = true;
 }
 
-SaveandLoad_Result GameSaver::GenerateFileLog(const std::shared_ptr<ByteStream> xByteStream_ptr)
+bool GameSaver::GenerateFileLog(const std::shared_ptr<ByteStream> xByteStream_ptr)
 {
 	auto xLogHistory = xByteStream_ptr->GetSaveHistory();
 
 	std::ofstream outfile_debug(m_FullFilePath + "_debug.log", std::ios::out);
 	if (!outfile_debug.is_open())
 	{
-		return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;
+		throw std::exception("Error: counldn't create log file in the specified path, make sure the path is correct!");
 	}
 	for (size_t i = 0; i < xLogHistory.size(); ++i)
 	{
 		outfile_debug << xLogHistory[i] << std::endl;
 	}
 	outfile_debug.close();
-	return SUCCESS;
+	return true;
 }
 
-SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
+bool GameSaver::Save(ISerializable& p_serializable)
 {
 	const auto xByteStream_ptr = std::make_shared<ByteStream>();
 	const auto xSerializer_ptr = std::make_shared<Serializer>(xByteStream_ptr);
 	
 	if(!p_serializable.Serialize(xSerializer_ptr))
 	{
-		return FAILED_COULD_NOT_SERIALIZE_YOUR_DATA;
+		throw std::exception("Error: counldn't serialize your data!");
 	}
 	xByteStream_ptr->DeleteEmptySpace();
 
 	std::ofstream outfile(m_FullFilePath, std::ios::binary);
 	if(!outfile.is_open())
 	{
-		return FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY;
+		throw std::exception("Error: counldn't create file in the specified path, make sure the path is correct!");
 	}
 	outfile.write(xByteStream_ptr->GetBuffer(), xByteStream_ptr->GetSize());
 	outfile.close();
@@ -66,15 +66,15 @@ SaveandLoad_Result GameSaver::Save(ISerializable& p_serializable)
 		return GenerateFileLog(xByteStream_ptr);
 	}
 
-	return SUCCESS;
+	return true;
 }
 
-SaveandLoad_Result GameSaver::Load(ISerializable* p_serializable)
+bool GameSaver::Load(ISerializable* p_serializable)
 {	
 	std::ifstream infile(m_FullFilePath, std::ios::binary);
 	if(!infile.is_open())
 	{
-		return FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY;
+		throw std::exception("Error: the file couln't be loaded. File not found in the path specified");
 	}
 	infile.seekg(0, infile.end);
 	int length = static_cast<int>(infile.tellg());
@@ -82,7 +82,7 @@ SaveandLoad_Result GameSaver::Load(ISerializable* p_serializable)
 
 	if(length <= 0)
 	{
-		return FAILED_FILE_IS_EMPTY;
+		throw std::exception("Error: the file loaded is empty!");
 	}
 	const auto xByteStream_ptr = std::make_shared<ByteStream>(length);
 	const auto xDeserializer_ptr = std::make_shared<Deserializer>(xByteStream_ptr);
@@ -90,10 +90,10 @@ SaveandLoad_Result GameSaver::Load(ISerializable* p_serializable)
 	infile.read(xByteStream_ptr->GetBuffer(), xByteStream_ptr->GetSize());
 	if(!p_serializable->Deserialize(xDeserializer_ptr))
 	{
-		return FAILED_COULD_NOT_DESERIALIZE_YOUR_DATA;
+		throw std::exception("Error: counldn't deserialize your data!");
 	}		
 	infile.close();	
 
-	return SUCCESS;
+	return true;
 }
 

@@ -56,8 +56,15 @@ bool ByteStream::Write(int p_count, std::string p_value)
 
 	m_cursor = m_data + m_length;
 	for (int i = 0; i < p_count; ++i)
-	{
-		*reinterpret_cast<char *>(m_cursor) = p_value[i];
+	{		
+		try
+		{
+			*reinterpret_cast<char *>(m_cursor) = p_value[i];
+		}
+		catch (const char* error) {
+			const std::string xError = "Counldn't serialize your data of type string and value: " + p_value + " - Error: " + std::string(error);
+			throw std::exception(xError.c_str());
+		}
 		m_cursor++;
 	}
 	m_debugBuffer.push_back(p_value);
@@ -68,8 +75,15 @@ bool ByteStream::Write(int p_count, std::string p_value)
 bool ByteStream::Read(int p_count, std::string& p_value)
 {
 	for (int i = 0; i < p_count; ++i)
-	{
-		p_value += *(reinterpret_cast<char *>(m_cursor));
+	{		
+		try
+		{
+			p_value += *(reinterpret_cast<char *>(m_cursor));
+		}
+		catch (const char* error) {
+			const std::string xError = "Counldn't deserialize your data of type string and value: " + p_value + " - Error: " + std::string(error);
+			throw std::exception(xError.c_str());
+		}
 		m_cursor++;	
 	}
 	return true;
@@ -91,9 +105,7 @@ void ByteStream::Reserve(const size_t& p_NewAmount)
 bool ByteStream::IsOutsideEndStreamBoundary()
 {
 	size_t length = static_cast<size_t>(m_cursor - m_data);
-	if(length + 1 > m_length)
-		return true;
-	return false;
+	return(length + 1 > m_length);
 }
 
 void ByteStream::ResetCursor() 
