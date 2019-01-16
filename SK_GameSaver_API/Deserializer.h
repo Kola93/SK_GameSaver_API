@@ -15,7 +15,21 @@ public:
 	virtual bool Deserialize(bool& value);
 	virtual bool Deserialize(char& value);
 	virtual bool Deserialize(int length, std::string& value);
+	template <class T>
+	bool Deserialize(const int& length, T& value);
 private:
 	std::shared_ptr<ByteStream> m_byteStream;
 };
 
+template<class T>
+inline bool Deserializer::Deserialize(const int &length, T& value)
+{
+	for (int i = 0; i < length; ++i)
+	{
+		if (!Deserialize(value[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}

@@ -71,12 +71,14 @@ bool ByteStream::Read(T& p_value)
 			p_value = *(reinterpret_cast<T *>(m_cursor));
 		}
 		catch (const char* error) {
-			const std::string xError = "Counldn't deserialize your data of type: " + std::string(typeid(T).name()) + " and value: " + std::to_string(p_value) +  " - Error: " + std::string(error);
+			const std::string xError = "Counldn't deserialize your data of type: " + std::string(typeid(T).name()) + " - Error: " + std::string(error);
 			throw std::exception(xError.c_str());
 		}		
 		m_cursor += sizeof(T);
 		return true;
 	}
-	return false;
+	const std::string xError = "Counldn't deserialize your data of type: " + std::string(typeid(T).name()) + " - Cursor out of range! You are deserializing more data than available!";
+	throw std::exception(xError.c_str());
+
 }
  
