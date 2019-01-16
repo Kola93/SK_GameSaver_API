@@ -16,7 +16,7 @@ GameSaver::GameSaver(std::string p_FilePath, std::string p_FileName, std::string
 
 GameSaver::GameSaver(std::string p_FilePath)
 {
-	m_FIleExtension = p_FilePath;
+	m_FullFilePath = p_FilePath;
 	m_generateLogFile = false;
 }
 
@@ -29,7 +29,7 @@ SaveandLoad_Result GameSaver::GenerateFileLog(const std::shared_ptr<ByteStream> 
 {
 	auto xLogHistory = xByteStream_ptr->GetSaveHistory();
 
-	std::ofstream outfile_debug(m_FIlePath + m_FIleName + "_debug.log", std::ios::out);
+	std::ofstream outfile_debug(m_FullFilePath + "_debug.log", std::ios::out);
 	if (!outfile_debug.is_open())
 	{
 		return FAILED_COULD_NOT_CREATE_LOG_FILE_IN_DIRECTORY;

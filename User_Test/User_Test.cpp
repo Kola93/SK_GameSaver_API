@@ -18,7 +18,7 @@ TEST(AUserClass, CanSaveAndLoadDataOfAnyType) {
 	xUserStructSave.string_value = "Save";
 	xUserStructSave.double_value = 0.58584848114495952;
 
-	GameSaver GS("./SaveFolder/","testUserStruct",".txt");
+	GameSaver GS("./SaveFolder/testUserStruct.txt");
 	GS.SetGenerateLogFileActive();
 	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
@@ -44,7 +44,7 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 	xUserStructSave.char_value = 'd';
 	xUserStructSave.string_value = "Save";
 
-	GameSaver GS("./SaveFolder/", "testUserStruct", ".myfile");
+	GameSaver GS("./SaveFolder/testUserStruct.myfile");
 	GS.SetGenerateLogFileActive();
 	SaveandLoad_Result SaveResult = GS.Save(xUserStructSave);
 	EXPECT_EQ(SaveResult, SaveandLoad_Result::SUCCESS);
@@ -62,14 +62,14 @@ TEST(AUserClass, CanSaveAndLoadDataWithAnyCustomFileExtension) {
 }
 
 TEST(TheUser, GetErrorWhenLoadingANotExistingFile) {
-	GameSaver GS("./SaveFolder/", "xxx", ".txt");
+	GameSaver GS("./SaveFolder/xxx.txt");
 	UserStruct xUserStructLoad;
 	SaveandLoad_Result result = GS.Load(&xUserStructLoad);
 	EXPECT_EQ(result, SaveandLoad_Result::FAILED_COULD_NOT_OPEN_FILE_IN_DIRECTORY);
 }
 
 TEST(TheUser, GetErrorWhenLoadingAFileWithNoData) {
-	GameSaver GS("./SaveFolder/", "EmptyFile", ".txt");
+	GameSaver GS("./SaveFolder/EmptyFile.txt");
 
 	UserStruct xUserStructLoad;
 	SaveandLoad_Result result = GS.Load(&xUserStructLoad);
@@ -93,7 +93,7 @@ TEST(TheUser, GetErrorWhenCreatingFileWithWrongDirectory) {
 			return true;
 		}
 	};
-	GameSaver GS("../user/wrongdirectory/", "text", ".txt");
+	GameSaver GS("../user/wrongdirectory/text.txt");
 	UserStruct2 xUserStruct2Save;
 	SaveandLoad_Result Saveresult = GS.Save(xUserStruct2Save);
 	EXPECT_EQ(Saveresult, SaveandLoad_Result::FAILED_COULD_NOT_CREATE_FILE_IN_DIRECTORY);
@@ -118,7 +118,7 @@ TEST(TheUser, GetErrorWhenTryingToDeserializeDataOutOfRange) {
 			return true;
 		}
 	};
-	GameSaver GS("./SaveFolder/", "TestUserStruct2", ".txt");
+	GameSaver GS("./SaveFolder/TestUserStruct2.txt");
 	UserStruct2 xUserStruct2Save;
 
 	SaveandLoad_Result SaveResult = GS.Save(xUserStruct2Save);
