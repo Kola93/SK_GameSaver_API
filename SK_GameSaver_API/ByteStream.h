@@ -51,8 +51,8 @@ bool ByteStream::Write(T p_value)
 	{
 		*reinterpret_cast<T *>(m_cursor) = p_value;
 	}
-	catch (const char* error){
-		const std::string xError = "Counldn't serialize your data of type: " + std::string(typeid(T).name()) + " and value: " + std::to_string(p_value) + " - Error: " + std::string(error);
+	catch (const std::runtime_error& error) {
+		const std::string xError = "Counldn't serialize your data of type: " + std::string(typeid(T).name()) + " and value: " + std::to_string(p_value) + " - Error: " + error.what();
 		throw std::exception(xError.c_str());
 	}	
 	m_length += sizeof(T);
@@ -70,8 +70,8 @@ bool ByteStream::Read(T& p_value)
 		{
 			p_value = *(reinterpret_cast<T *>(m_cursor));
 		}
-		catch (const char* error) {
-			const std::string xError = "Counldn't deserialize your data of type: " + std::string(typeid(T).name()) + " - Error: " + std::string(error);
+		catch (const std::runtime_error& error) {
+			const std::string xError = "Counldn't deserialize your data of type: " + std::string(typeid(T).name()) + " - Error: " + error.what();
 			throw std::exception(xError.c_str());
 		}		
 		m_cursor += sizeof(T);

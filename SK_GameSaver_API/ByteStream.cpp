@@ -61,8 +61,8 @@ bool ByteStream::Write(int p_count, std::string p_value)
 		{
 			*reinterpret_cast<char *>(m_cursor) = p_value[i];
 		}
-		catch (const char* error) {
-			const std::string xError = "Counldn't serialize your data of type string and value: " + p_value + " - Error: " + std::string(error);
+		catch (const std::runtime_error& error) {
+			const std::string xError = "Counldn't serialize your data of type string and value: " + p_value + " - Error: " + error.what();
 			throw std::exception(xError.c_str());
 		}
 		m_cursor++;
@@ -80,8 +80,8 @@ bool ByteStream::Read(int p_count, std::string& p_value)
 		{
 			p_value += *(reinterpret_cast<char *>(m_cursor));
 		}
-		catch (const char* error) {
-			const std::string xError = "Counldn't deserialize your data of type string and value: " + p_value + " - Error: " + std::string(error);
+		catch (const std::runtime_error& error) {
+			const std::string xError = "Counldn't deserialize your data of type string and value: " + p_value + " - Error: " + error.what();
 			throw std::exception(xError.c_str());
 		}
 		m_cursor++;	
