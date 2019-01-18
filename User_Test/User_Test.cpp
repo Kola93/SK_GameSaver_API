@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "UserStruct.h"
-// note: unity build
 #include "../SK_GameSaver_API/ByteStream.cpp"
 #include "../SK_GameSaver_API/Deserializer.cpp"
 #include "../SK_GameSaver_API/GameSaver.cpp"

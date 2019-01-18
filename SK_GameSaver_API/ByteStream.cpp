@@ -1,7 +1,6 @@
 #include "ByteStream.h"
 #include <algorithm>
 
-
 ByteStream::ByteStream()
 {
 	m_data = nullptr;
@@ -23,6 +22,7 @@ ByteStream::~ByteStream()
 {
 	delete[] m_data;
 	m_data = nullptr;
+	m_cursor = nullptr;
 }
 
 void ByteStream::DeleteEmptySpace()

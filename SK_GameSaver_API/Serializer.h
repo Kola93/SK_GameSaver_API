@@ -25,11 +25,11 @@ template<class T>
 inline bool Serializer::Serialize(const int &length, const T* value)
 {
 	for (int i = 0; i < length; ++i)
-	{
+	{	
 		if (!Serialize(value[i]))
 		{
 			return false;
-		}
+		}		
 	}
 	return true;
 }
