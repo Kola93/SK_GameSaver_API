@@ -49,22 +49,12 @@ bool ByteStream::Write(int p_count, std::string p_value)
 {
 	assert(p_count == static_cast<int>(p_value.size()) && "Error: Number of chars is different from size of string");
 	
-	if (m_length == 0 || m_capacity == m_length)
-	{
+	if (m_length == 0 || m_capacity == m_length) {
 		Reserve(m_capacity + static_cast<int>(p_value.size()));
 	}
-
 	m_cursor = m_data + m_length;
-	for (int i = 0; i < p_count; ++i)
-	{		
-		try
-		{
-			*reinterpret_cast<char *>(m_cursor) = p_value[i];
-		}
-		catch (const std::runtime_error& error) {
-			const std::string xError = "Counldn't serialize your data of type string and value: " + p_value + " - Error: " + error.what();
-			throw std::exception(xError.c_str());
-		}
+	for (int i = 0; i < p_count; ++i) {	
+		*reinterpret_cast<char *>(m_cursor) = p_value[i];
 		m_cursor++;
 	}
 	m_debugBuffer.push_back(p_value);
@@ -74,16 +64,8 @@ bool ByteStream::Write(int p_count, std::string p_value)
 
 bool ByteStream::Read(int p_count, std::string& p_value)
 {
-	for (int i = 0; i < p_count; ++i)
-	{		
-		try
-		{
-			p_value += *(reinterpret_cast<char *>(m_cursor));
-		}
-		catch (const std::runtime_error& error) {
-			const std::string xError = "Counldn't deserialize your data of type string and value: " + p_value + " - Error: " + error.what();
-			throw std::exception(xError.c_str());
-		}
+	for (int i = 0; i < p_count; ++i) {		
+		p_value += *(reinterpret_cast<char *>(m_cursor));
 		m_cursor++;	
 	}
 	return true;

@@ -122,7 +122,7 @@ TEST(TheUser, GetErrorWhenTryingToDeserializeDataOutOfRange) {
 	ASSERT_ANY_THROW(GS.Load(&xUserStruct2Save));
 }
 
-TEST(TheUser, CanSaveAndLoadDataWithArrayOfAnyPrimitiveType) {
+TEST(TheUser, CanSaveAndLoadDataWithStaticArrayOfAnyPrimitiveType) {
 	struct UserStruct4 : public ISerializable
 	{
 		int int_container[2];
