@@ -1,6 +1,6 @@
 # SK_GameSaver_API
 C++ API Game Saver and Loader
-Created by Steven Kolankowski in 2018.
+Created by Steven Kolankowski (kola93) in 2018.
 
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
